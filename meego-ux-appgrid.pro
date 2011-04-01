@@ -12,7 +12,7 @@ OTHER_FILES += *.qml *.js
 INSTALLS += share
 
 TRANSLATIONS += *.qml *.js
-VERSION = 0.2.0
+VERSION = 0.2.1
 PROJECT_NAME = meego-ux-appgrid
 
 dist.commands += rm -fR $${PROJECT_NAME}-$${VERSION} &&
