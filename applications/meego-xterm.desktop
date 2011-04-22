@@ -27,3 +27,5 @@ Name[cs]=Terminál
 Icon=terminal
 Exec=xterm
 X-MEEGO-CORE-UX=true
+X-MEEGO-CGROUP-PATH=managed
+X-MEEGO-CGROUP-CONTROLLERS=freezer

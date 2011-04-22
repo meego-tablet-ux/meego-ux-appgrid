@@ -27,3 +27,5 @@ Name[cs]=Hudba
 Icon=meego-app-music
 Exec=meego-qml-launcher --opengl --fullscreen --app meego-app-music
 X-MEEGO-CORE-UX=true
+X-MEEGO-CGROUP-PATH=unlimited
+X-MEEGO-CGROUP-CONTROLLERS=freezer

@@ -27,3 +27,5 @@ Name[cs]=Kalkulačka
 Icon=meego-app-calculator
 Exec=meego-qml-launcher --opengl --fullscreen --app meego-app-calculator
 X-MEEGO-CORE-UX=true
+X-MEEGO-CGROUP-PATH=managed
+X-MEEGO-CGROUP-CONTROLLERS=freezer

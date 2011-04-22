@@ -27,3 +27,5 @@ Name[cs]=Fotografie
 Icon=meego-app-photos
 Exec=meego-qml-launcher --opengl --fullscreen --app meego-app-photos
 X-MEEGO-CORE-UX=true
+X-MEEGO-CGROUP-PATH=managed
+X-MEEGO-CGROUP-CONTROLLERS=freezer

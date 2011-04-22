@@ -27,3 +27,5 @@ Name[cs]=Kontakty
 Icon=meego-app-contacts
 Exec=meego-qml-launcher --opengl --fullscreen --app meego-app-contacts
 X-MEEGO-CORE-UX=true
+X-MEEGO-CGROUP-PATH=managed
+X-MEEGO-CGROUP-CONTROLLERS=freezer

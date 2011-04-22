@@ -27,3 +27,5 @@ Name[cs]=Fotoaparát
 Icon=meego-app-camera
 Exec=meego-qml-launcher --opengl --fullscreen --app meego-app-camera
 X-MEEGO-CORE-UX=true
+X-MEEGO-CGROUP-PATH=limited
+X-MEEGO-CGROUP-CONTROLLERS=freezer
