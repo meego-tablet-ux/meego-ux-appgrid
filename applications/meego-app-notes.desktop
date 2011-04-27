@@ -2,7 +2,7 @@
 Type=Application
 Name=Notes
 Name[zh_TW]=備註
-Name[zh_CN]=说明
+Name[zh_CN]=便笺
 Name[tr]=Notlar
 Name[sv]=Anteckningar
 Name[ru]=Примечания
@@ -15,7 +15,7 @@ Name[ko]=메모
 Name[ja]=メモ
 Name[it]=Note
 Name[hu]=Feljegyzések
-Name[fr]=Remarques
+Name[fr]=Notes
 Name[fi]=Muistiinpanot
 Name[es]=Notas
 Name[en_US]=Notes
