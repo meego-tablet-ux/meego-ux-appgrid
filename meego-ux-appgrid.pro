@@ -1,3 +1,4 @@
+VERSION = 0.2.3
 TEMPLATE = subdirs
 
 share.files += \
@@ -12,7 +13,6 @@ OTHER_FILES += *.qml *.js
 INSTALLS += share
 
 TRANSLATIONS += *.qml *.js
-VERSION = 0.2.2
 PROJECT_NAME = meego-ux-appgrid
 
 dist.commands += rm -fR $${PROJECT_NAME}-$${VERSION} &&
