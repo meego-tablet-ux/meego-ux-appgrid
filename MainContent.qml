@@ -7,7 +7,8 @@
  */
 
 import Qt 4.7
-import MeeGo.Labs.Components 0.1
+import MeeGo.Labs.Components 0.1 as Labs
+import MeeGo.Components 0.1
 import "home.js" as Code
 
 Item {
@@ -77,7 +78,7 @@ Item {
         }
     }
 
-    ApplicationsModel {
+    Labs.ApplicationsModel {
         id: appsModel
         type: "Application"
         directories: [ "/usr/share/meego-ux-appgrid/virtual-applications", "/usr/share/meego-ux-appgrid/applications", "/usr/share/applications", "~/.local/share/applications" ]
@@ -95,7 +96,7 @@ Item {
             listView.relayout();
         }
     }
-    ApplicationsModel {
+    Labs.ApplicationsModel {
         id: widgetsModel
         type: "Widget"
         directory: "~/.config/MeeGo/widgets"
@@ -200,7 +201,7 @@ Item {
                         anchors.fill: parent
                         anchors.rightMargin: parent.width/2
                         opacity: confirmDialogInstance.uninstallable ? 1.0 : 0.0
-                        title: qsTr("Delete")
+                        text: qsTr("Delete")
                         bgSourceUp: "image://theme/btn_blue_up"
                         bgSourceDn: "image://theme/btn_blue_up"
                         onClicked: {
@@ -212,7 +213,7 @@ Item {
                     Button {
                         anchors.fill: parent
                         anchors.leftMargin: confirmDialogInstance.uninstallable ? parent.width/2 : 0
-                        title: qsTr("Cancel")
+                        text: qsTr("Cancel")
                         bgSourceUp: "image://theme/btn_red_up"
                         bgSourceDn: "image://theme/btn_red_up"
                         onClicked: confirmDialogInstance.opacity = 0.0

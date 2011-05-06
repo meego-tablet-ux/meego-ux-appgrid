@@ -7,11 +7,11 @@
  */
 
 import Qt 4.7
-import MeeGo.Labs.Components 0.1
+import MeeGo.Labs.Components 0.1 as Labs
 
 // TODO: As soon as we have real hardware then stop wrapping the
 //       window in the temporary outershell
-Window {
+Labs.Window {
     id: scene
     anchors.centerIn: parent
     showtoolbar: false
@@ -37,7 +37,7 @@ Window {
             anchors.fill: parent
             color: "black"
             property variant backgroundImage: null
-            BackgroundModel {
+            Labs.BackgroundModel {
                 id: backgroundModel
                 Component.onCompleted: {
                     background.backgroundImage = backgroundImageComponent.createObject(background);
@@ -59,7 +59,7 @@ Window {
             }
         }
 
-        StatusBar {
+        Labs.StatusBar {
             anchors.top: parent.top
             width: parent.width
             height: theme_statusBarHeight
