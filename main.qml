@@ -7,26 +7,20 @@
  */
 
 import Qt 4.7
+import MeeGo.Components 0.1
 import MeeGo.Labs.Components 0.1 as Labs
 
 // TODO: As soon as we have real hardware then stop wrapping the
 //       window in the temporary outershell
-Labs.Window {
+Window {
     id: scene
     anchors.centerIn: parent
-    showtoolbar: false
-    fullscreen: true
+    fullScreen: true
     fullContent: true
+    lockOrientationIn: "portrait"
 
-    // Lock the orientation in LeftUp
-    orientationLocked: true
-    orientation: qApp.preferredPortraitOrientation
-    property bool locked: false
-
-    Component.onCompleted: console.log("XXX theme name: " + theme_name);
-    Item {
+    overlayItem: Item {
         id: deviceScreen
-        parent: scene.content
         x: 0
         y: 0
         width: parent.width
@@ -59,7 +53,7 @@ Labs.Window {
             }
         }
 
-        Labs.StatusBar {
+        StatusBar {
             anchors.top: parent.top
             width: parent.width
             height: theme_statusBarHeight

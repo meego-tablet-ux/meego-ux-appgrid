@@ -383,7 +383,7 @@ Item {
                         else
                         {
                             // Verify that the user really wishes to uninstall
-                            var dialog = confirmDialogComponent.createObject(scene.content);
+                            var dialog = confirmDialogComponent.createObject(mainGrid);
                             dialog.desktop = itemInstance.desktop;
                         }
                     }
@@ -423,7 +423,7 @@ Item {
                     activePager = -1;
 
                 validPosition = Code.isBlockAvailable(desktop, desktop.priority + 1, targetRow, targetRow - (desktop.height - 1), targetColumn, targetColumn + (desktop.width - 1), listView.currentItem.page);
-                var pos = mapToItem(scene.container, mouseX, mouseY);
+                var pos = mapToItem(deviceScene, mouseX, mouseY);
                 itemTranslate.x = pos.x - xoffset - originalX;
                 itemTranslate.y = pos.y - yoffset - originalY;
 
@@ -567,10 +567,10 @@ Item {
     }
     Item {
         id: drawingArea
-        width: scene.content.width
-        height: scene.content.height
-        property int cellWidth: scene.container.width/4
-        property int cellHeight: scene.container.height/5
+        width: parent.width
+        height: parent.height
+        property int cellWidth: width/4
+        property int cellHeight: height/5
 
         property bool switcherActive: false
 
