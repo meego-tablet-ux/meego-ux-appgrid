@@ -423,7 +423,7 @@ Item {
                     activePager = -1;
 
                 validPosition = Code.isBlockAvailable(desktop, desktop.priority + 1, targetRow, targetRow - (desktop.height - 1), targetColumn, targetColumn + (desktop.width - 1), listView.currentItem.page);
-                var pos = mapToItem(deviceScene, mouseX, mouseY);
+                var pos = mapToItem(mainGrid, mouseX, mouseY);
                 itemTranslate.x = pos.x - xoffset - originalX;
                 itemTranslate.y = pos.y - yoffset - originalY;
 
