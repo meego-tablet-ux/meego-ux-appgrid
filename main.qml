@@ -16,8 +16,6 @@ Window {
     id: scene
     anchors.centerIn: parent
     fullScreen: true
-    fullContent: true
-    lockOrientationIn: "portrait"
 
     overlayItem: Item {
         id: deviceScreen
