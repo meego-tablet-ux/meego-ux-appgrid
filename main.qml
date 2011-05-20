@@ -10,10 +10,8 @@ import Qt 4.7
 import MeeGo.Components 0.1
 import MeeGo.Labs.Components 0.1 as Labs
 
-// TODO: As soon as we have real hardware then stop wrapping the
-//       window in the temporary outershell
 Window {
-    id: scene
+    id: window
     anchors.centerIn: parent
     fullScreen: true
 
