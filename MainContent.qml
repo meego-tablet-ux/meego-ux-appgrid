@@ -420,7 +420,7 @@ Item {
 
         property bool switcherActive: false
 
-        focus: !switcherActive && !scene.locked
+        focus: !switcherActive
         Item {
             id: dockContainer
             anchors.fill: parent
@@ -577,7 +577,7 @@ Item {
         }
 
         Connections {
-            target: scene
+            target: window
             onOrientationChanged: {
                 listView.relayout();
             }
