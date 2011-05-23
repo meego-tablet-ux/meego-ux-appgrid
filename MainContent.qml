@@ -123,107 +123,6 @@ Item {
     }
 
     Component {
-        id: confirmDialogComponent
-        Item {
-            id: confirmDialogInstance
-            width: mainGrid.width
-            height: mainGrid.height
-            opacity: 0.0
-            onOpacityChanged: {
-                if (opacity == 0.0)
-                {
-                    confirmDialogInstance.destroy();
-                }
-            }
-            Behavior on opacity {
-                NumberAnimation { duration: 250; }
-            }
-
-            property variant desktop
-            property bool uninstallable: false
-            onDesktopChanged: {
-                uninstallable = !desktop.contains("Desktop Entry/X-MEEGO-CORE-UX");
-            }
-
-            Component.onCompleted: {
-                opacity = 1.0;
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: confirmDialogInstance.opacity = 0.0
-            }
-            BorderImage {
-                id: dialog
-                anchors.bottom: parent.bottom
-                width: parent.width
-                height: parent.height/2
-                border.top: 14
-                border.left: 20
-                border.right: 20
-                border.bottom: 20
-                source: "image://theme/notificationBox_bg"
-                Text {
-                    id: dialogTitle
-                    anchors.top: parent.top
-                    anchors.topMargin: 14
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    width: parent.width
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                    text: qsTr("Delete \"%1\"").arg(confirmDialogInstance.desktop.title)
-                    font.pointSize: 20
-                    color: theme_fontColorNormal
-                }
-                Text {
-                    id: dialogBodyMsg
-                    anchors.fill: parent
-                    anchors.topMargin: dialogTitle.y + dialogTitle.height
-                    anchors.leftMargin: 20
-                    anchors.rightMargin: 20
-                    anchors.bottomMargin: 20 + dialogButtonBox.height
-                    color: theme_fontColorNormal
-                    font.pointSize: 18
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    text: confirmDialogInstance.uninstallable ? qsTr("Deleting \"%1\" will also delete all of its data").arg(confirmDialogInstance.desktop.title) : qsTr("\"%1\" can not be deleted").arg(confirmDialogInstance.desktop.title)
-                }
-                Item {
-                    id: dialogButtonBox
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 20
-                    anchors.left: parent.left
-                    anchors.leftMargin: 20
-                    width: parent.width - 40
-                    height: parent.height/5
-                    Button {
-                        anchors.fill: parent
-                        anchors.rightMargin: parent.width/2
-                        opacity: confirmDialogInstance.uninstallable ? 1.0 : 0.0
-                        text: qsTr("Delete")
-                        bgSourceUp: "image://theme/btn_blue_up"
-                        bgSourceDn: "image://theme/btn_blue_up"
-                        onClicked: {
-                            confirmDialogInstance.desktop.uninstall();
-                            confirmDialogInstance.opacity = 0.0;
-                        }
-                    }
-
-                    Button {
-                        anchors.fill: parent
-                        anchors.leftMargin: confirmDialogInstance.uninstallable ? parent.width/2 : 0
-                        text: qsTr("Cancel")
-                        bgSourceUp: "image://theme/btn_red_up"
-                        bgSourceDn: "image://theme/btn_red_up"
-                        onClicked: confirmDialogInstance.opacity = 0.0
-                    }
-                }
-            }
-        }
-    }
-
-    Component {
         id: itemComponent
         Item {
             id: itemInstance
@@ -282,7 +181,7 @@ Item {
                 var repage = desktop.row != 0 && listView.currentItem.page != desktop.page;
                 var target = listView.landingPad;
 
-                if (!trash.active && validPosition && (target.row != desktop.row || target.column != desktop.column || listView.currentItem.page != desktop.page))
+                if (validPosition && (target.row != desktop.row || target.column != desktop.column || listView.currentItem.page != desktop.page))
                 {
                     if (target.row == 0)
                     {
@@ -373,21 +272,6 @@ Item {
                         itemInstance.parent = listView.currentItem;
                     }
 
-                    if (trash.active)
-                    {
-                        trash.active = false;
-                        if (itemInstance.desktop.type == "Widget")
-                        {
-                            itemInstance.desktop.uninstall();
-                        }
-                        else
-                        {
-                            // Verify that the user really wishes to uninstall
-                            var dialog = confirmDialogComponent.createObject(mainGrid);
-                            dialog.desktop = itemInstance.desktop;
-                        }
-                    }
-
                     if (repage)
                     {
                         itemInstance.destroy();
@@ -405,11 +289,6 @@ Item {
                 var pos = mapToItem(drawingArea, mouseX, mouseY);
                 var targetRow = Code.position2Row(drawingArea.height - pos.y, drawingArea.height - mouseY);
                 var targetColumn = Code.position2Column(pos.x, drawingArea.width + mouseX);
-
-                if (drawingArea.childAt(pos.x, pos.y) == trash)
-                    trash.active = true;
-                else
-                    trash.active = false;
 
                 var pagerPos = mapToItem(pager, mouseX, mouseY);
                 var pagerItem = pager.childAt(pagerPos.x, pagerPos.y);
@@ -680,28 +559,6 @@ Item {
             opacity: activePager == 11 && listView.currentIndex < 9  && listView.currentIndex < listView.count - 1 ?  0.1 : 0.0
         }
 
-
-        Item {
-            id: trash
-            anchors.left:  listView.left
-            anchors.bottom: listView.bottom
-            anchors.bottomMargin: -height/2
-            opacity: customizeMode ? 1.0 : 0.0
-            property bool active: false
-            width: drawingArea.width/8
-            height: drawingArea.height/8
-            Behavior on opacity {
-                NumberAnimation { duration: 200 }
-            }
-            Image {
-                anchors.centerIn: parent
-                scale: parent.active ? 3.0 : 1.0
-                Behavior on scale {
-                    NumberAnimation { duration: 200 }
-                }
-                source: parent.active ? "image://meegotheme/widgets/apps/home-screen/trash-active" : "image://meegotheme/widgets/apps/home-screen/trash"
-            }
-        }
 
         Row {
             id: pager
