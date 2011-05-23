@@ -19,7 +19,7 @@ Item {
         if (customizeMode)
         {
             // Add a new empty page so that it is possible to move an
-            // icon/widget to the next page
+            // icon to the next page
             if (listView.model.count < 9)
             {
                 Code.assignedSeats.push([]);
@@ -96,31 +96,6 @@ Item {
             listView.relayout();
         }
     }
-    Labs.ApplicationsModel {
-        id: widgetsModel
-        type: "Widget"
-        directory: "~/.config/MeeGo/widgets"
-        onAppsChanged: {
-            var newpage = false;
-            Code.removeNullDesktops();
-            var targetPage = Code.assignNewSeats(apps);
-            Code.removeEmptyPages();
-            while (Code.assignedSeats.length > listView.model.count)
-            {
-                newpage = true;
-                listView.model.append({'dpage': listView.model.count});
-            }
-            while (listView.model.count > Code.assignedSeats.length)
-                listView.model.remove(listView.model.count - 1);
-            if (targetPage != -1)
-            {
-               if (targetPage == listView.currentIndex)
-                   listView.relayout();
-               else
-                   listView.currentIndex = targetPage;
-            }
-        }
-    }
 
     Component {
         id: itemComponent
@@ -132,10 +107,10 @@ Item {
             y: (drawingArea.cellHeight * (4 - row)) % parent.height
             property int row: desktop.row
             property int column: desktop.column
-            property alias selected: widgetContainer.selected
-            property alias validPosition: widgetContainer.validPosition
+            property alias selected: iconContainer.selected
+            property alias validPosition: iconContainer.validPosition
             property int index: 0
-            property alias container: widgetContainer
+            property alias container: iconContainer
             property variant desktop
 
             property int xoffset: 0
@@ -170,7 +145,7 @@ Item {
 
             function startDrag(mouseX, mouseY) {
                 customizeMode = true;
-                widgetContainer.selected = true;
+                iconContainer.selected = true;
                 listView.landingPad.opacity = 0.5;
                 itemInstance.parent = drawingArea;
             }
@@ -235,7 +210,7 @@ Item {
                         }
                         catch (err)
                         {
-                            // This isn't an icon/widget item
+                            // This isn't an icon item
                         }
                     }
 
@@ -257,7 +232,7 @@ Item {
                         }
                         catch (err)
                         {
-                            // This isn't an icon/widget item
+                            // This isn't an icon item
                         }
                     }
                 }
@@ -325,16 +300,8 @@ Item {
                 if (desktop != null)
                 {
                     connectionsComponent.createObject(itemInstance);
-                    if (desktop.type == "Application")
-                    {
-                        var source = "AppIcon.qml";
-                    }
-                    else
-                    {
-                        var source = desktop.value("Desktop Entry/X-MEEGO-WIDGET-SOURCE");
-                    }
-                    var c = Qt.createComponent(source);
-                    var o = c.createObject(widgetContainer);
+                    var c = Qt.createComponent("AppIcon.qml");
+                    var o = c.createObject(iconContainer);
                     o.width = itemInstance.width;
                     o.height = itemInstance.height;
                     try
@@ -343,7 +310,7 @@ Item {
                     }
                     catch (err)
                     {
-                        // Widget does not have a desktop property
+                        // icon does not have a desktop property
                     }
                 }
             }
@@ -353,7 +320,7 @@ Item {
             MouseArea {
                 anchors.fill: parent
                 onPressed: initPressed(mouseX, mouseY)
-                onClicked: widgetContainer.clicked(mouse)
+                onClicked: iconContainer.clicked(mouse)
                 onPressAndHold: startDrag(mouseX, mouseY)
                 onReleased: {
                     if (parent.selected)
@@ -365,7 +332,7 @@ Item {
                 }
             }
             Rectangle {
-                id: widgetBackground
+                id: iconBackground
                 anchors.fill: parent
                 anchors.margins: 5
                 opacity: 0.0
@@ -373,7 +340,7 @@ Item {
                 radius: 10
             }
             Item {
-                id: widgetContainer
+                id: iconContainer
                 anchors.fill: parent
                 property bool selected: false
                 property bool validPosition: true
@@ -384,7 +351,7 @@ Item {
                         name: "customized"
                         when: customizeMode && !selected && desktop.row > 0
                         PropertyChanges {
-                            target: widgetBackground
+                            target: iconBackground
                             opacity: 0.2
                             color: "yellow"
                         }
@@ -432,11 +399,11 @@ Item {
             transform: Translate {
                 // Dragging this item is done via this Translate element so that
                 // the original toplevel x and y bindings are preserved.  This
-                // way we are always assured that an icon/widget will snap into
+                // way we are always assured that an icon will snap into
                 // the correct location since once you assign an objects
                 // property from inside Javascript, then the binding is lost
                 // and changes to the desktop row/column will no longer result
-                // in the icon/widget automatically snapping into the correct
+                // in the icon automatically snapping into the correct
                 // location.
                 id: itemTranslate
                 x: 0
@@ -478,7 +445,6 @@ Item {
             model: ListModel {}
             Component.onCompleted: {
                 Code.assignSeats(appsModel.apps);
-                Code.assignSeats(widgetsModel.apps);
                 Code.processWaitingList();
                 Code.removeEmptyPages();
                 for (var page = 0; page < Code.getPageCount(); page++)

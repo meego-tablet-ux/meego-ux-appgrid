@@ -191,7 +191,7 @@ function isBlockAvailable (caller, priority, startingRow, endingRow, startingCol
     }
     else
     {
-        // App/Widget grid request
+        // App grid request
         if (startingRow < 1 || endingRow > 4 || endingRow < 1)
             return false;
         if (startingColumn < 0 || endingColumn > 3 || startingColumn > endingColumn)
@@ -502,7 +502,7 @@ function cleanup(target)
     // Start counting at 2 instead of 0 so that we do not
     // accidently remove the MouseArea used for triggering the
     // personalization UI and the landingPad used for guiding
-    // the moved icon/widget
+    // the moved icon
     for (var i = 2; i < target.children.length; i++)
     {
         target.children[i].destroy();
