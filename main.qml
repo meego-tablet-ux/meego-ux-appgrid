@@ -53,7 +53,7 @@ Window {
             anchors.top: parent.top
             width: parent.width
             height: theme_statusBarHeight
-            active: scene.foreground
+            active: window.isActiveWindow
             backgroundOpacity: theme_panelStatusBarOpacity
         }
 
