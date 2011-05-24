@@ -95,6 +95,7 @@ function pluckFromDock(desktop)
 
 function insertIntoPage(desktop)
 {
+    desktop.assigned = true;
     assignedSeats[desktop.page].push(desktop);
 }
 
@@ -225,23 +226,6 @@ function freeSeatingBlock (caller, startingRow, endingRow, startingColumn, endin
     }
 }
 
-// This method should only be called after verifying that
-// the seats are available
-function assignSeat(desktop, priority, startingRow, endingRow, startingColumn, endingColumn, page)
-{
-    // extend the number if pages if needed
-    if (assignedSeats.length < page + 1)
-    {
-        for (var i = assignedSeats.length; i < page; i++)
-        {
-            assignedSeats.push([]);
-        }
-    }
-
-    desktop.assigned = true;
-    assignedSeats[page].push(desktop);
-}
-
 function assignFreeSeatInPage(desktop, page)
 {
     if (page > assignedSeats.length - 1)
@@ -261,6 +245,7 @@ function assignFreeSeatInPage(desktop, page)
                 desktop.column = column;
                 desktop.page = page;
                 assignedSeats[page].push(desktop);
+                desktop.assigned = true;
                 return true;
             }
         }
@@ -290,42 +275,6 @@ function processWaitingList()
     }
     waitingList = stillWaitingList;
     return lastPageSeated;
-}
-
-function assignNewSeats(desktops)
-{
-    var list = [];
-    for (var i = 0; i < desktops.length; i++)
-    {
-        var found = false;
-        var d = desktops[i];
-
-        if (d.assigned == true)
-            continue;
-
-        if (d.row == -1 ||
-            d.column == -1 ||
-            d.page == -1 ||
-            d.page > assignedSeats.length - 1)
-        {
-            waitingList.push(d);
-            continue;
-        }
-
-        for (var k = 0; k < assignedSeats[d.page].length; k++)
-        {
-            if (assignedSeats[d.page][k].filename == d.filename)
-            {
-                found = true;
-                break;
-            }
-        }
-        if (!found)
-        {
-            waitingList.push(d);
-        }
-    }
-    return processWaitingList();
 }
 
 function assignSeats(desktops)
@@ -370,6 +319,7 @@ function assignSeats(desktops)
                 freeSeatingBlock(d, d.row, d.row, d.column, d.column, 0);
                 dock.push(d);
             }
+            d.assigned = true;
         }
         else
         {
@@ -499,11 +449,11 @@ function position2Row(position, length)
 
 function cleanup(target)
 {
-    // Start counting at 2 instead of 0 so that we do not
+    // Start counting at 1 instead of 0 so that we do not
     // accidently remove the MouseArea used for triggering the
     // personalization UI and the landingPad used for guiding
     // the moved icon
-    for (var i = 2; i < target.children.length; i++)
+    for (var i = 1; i < target.children.length; i++)
     {
         target.children[i].destroy();
     }
