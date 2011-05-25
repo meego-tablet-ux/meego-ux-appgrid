@@ -81,7 +81,7 @@ Item {
     Labs.ApplicationsModel {
         id: appsModel
         type: "Application"
-        directories: [ "/usr/share/meego-ux-appgrid/virtual-applications", "/usr/share/meego-ux-appgrid/applications", "/usr/share/applications", "~/.local/share/applications" ]
+        directories: qApp.applicationDirectories
         onAppsChanged: {
             Code.assignSeats(apps);
             Code.processWaitingList();
