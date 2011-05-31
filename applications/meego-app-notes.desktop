@@ -29,3 +29,6 @@ Exec=meego-qml-launcher --opengl --fullscreen --app meego-app-notes
 X-MEEGO-CORE-UX=true
 X-MEEGO-CGROUP-PATH=managed
 X-MEEGO-CGROUP-CONTROLLERS=freezer
+X-MEEGO-APP-HOME-ROW=4
+X-MEEGO-APP-HOME-COLUMN=1
+X-MEEGO-APP-HOME-PAGE=0
