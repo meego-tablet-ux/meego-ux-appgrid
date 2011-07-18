@@ -148,10 +148,12 @@ Item {
                 iconContainer.selected = true;
                 listView.landingPad.opacity = 0.5;
                 itemInstance.parent = drawingArea;
+                Code.pluckFromPage(desktop);
             }
 
             function endDrag(mouseX, mouseY) {
                 selected = false;
+                Code.insertIntoPage(desktop);
 
                 var repage = desktop.row != 0 && listView.currentItem.page != desktop.page;
                 var target = listView.landingPad;
